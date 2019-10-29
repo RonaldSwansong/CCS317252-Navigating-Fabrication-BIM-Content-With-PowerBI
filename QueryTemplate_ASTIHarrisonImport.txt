@@ -1,0 +1,6 @@
+let
+    Source = Excel.Workbook(File.Contents("C:\Users\{YourUsernameHere}\Downloads\CCS317252_AddlClassMaterials\ASTI_HarrisonImport.xlsx"), null, true),
+    ASTI_HarrisonImport_Table = Source{[Item="ASTI_HarrisonImport",Kind="Table"]}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(ASTI_HarrisonImport_Table,{{"PriceMax", Currency.Type}})
+in
+    #"Changed Type"

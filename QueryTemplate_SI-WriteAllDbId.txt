@@ -1,0 +1,9 @@
+let
+    Source = Csv.Document(File.Contents("C:\Users\{YourUsernameHere}\Downloads\CCS317252_AddlClassMaterials\SI-WriteAllDatabaseIDs.TXT"),[Delimiter=",", Encoding=1252]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Duplicated Column" = Table.DuplicateColumn(#"Promoted Headers", "ITEM NAME", "ITEM NAME - Copy"),
+    #"Split Column by Delimiter" = Table.SplitColumn(#"Duplicated Column", "ITEM NAME - Copy", Splitter.SplitTextByEachDelimiter({"."}, QuoteStyle.Csv, true), {"ITEM NAME - Copy.1", "ITEM NAME - Copy.2"}),
+    #"Removed Columns" = Table.RemoveColumns(#"Split Column by Delimiter",{"ITEM NAME - Copy.2"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"ITEM NAME - Copy.1", "CODItem_FK"}})
+in
+    #"Renamed Columns"

@@ -1,0 +1,20 @@
+let
+    Source = Folder.Files("C:\Users\Public\Documents\Autodesk\Fabrication 2019\Imperial Content\V3.06"),
+    #"Added Custom" = Table.AddColumn(Source, "Binary.ToText", each Binary.ToText([Content],BinaryEncoding.Base64)),
+    #"Filtered Rows" = Table.SelectRows(#"Added Custom", each [Extension] = ".jpg" or [Extension] = ".JPG" or [Extension] = ".PNG" or [Extension] = ".png"),
+    #"Added Custom1" = Table.AddColumn(#"Filtered Rows", "ImgUrl", each "data:image/png;base64, " & [Binary.ToText]),
+    #"Duplicated Column" = Table.DuplicateColumn(#"Added Custom1", "Folder Path", "Folder Path - Copy"),
+    #"Split Column by Delimiter" = Table.SplitColumn(#"Duplicated Column", "Folder Path - Copy", Splitter.SplitTextByDelimiter("\", QuoteStyle.Csv), {"Folder Path - Copy.1", "Folder Path - Copy.2", "Folder Path - Copy.3", "Folder Path - Copy.4", "Folder Path - Copy.5", "Folder Path - Copy.6", "Folder Path - Copy.7", "Folder Path - Copy.8", "Folder Path - Copy.9", "Folder Path - Copy.10"}),
+    #"Removed Columns" = Table.RemoveColumns(#"Split Column by Delimiter",{"Folder Path - Copy.1", "Folder Path - Copy.2", "Folder Path - Copy.3", "Folder Path - Copy.4", "Folder Path - Copy.5", "Content", "Attributes"}),
+    #"Duplicated Column1" = Table.DuplicateColumn(#"Removed Columns", "Name", "Name - Copy"),
+    #"Split Column by Delimiter1" = Table.SplitColumn(#"Duplicated Column1", "Name - Copy", Splitter.SplitTextByDelimiter(".", QuoteStyle.Csv), {"Name - Copy.1", "Name - Copy.2"}),
+    #"Removed Columns1" = Table.RemoveColumns(#"Split Column by Delimiter1",{"Name - Copy.2"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns1",{{"Name - Copy.1", "ImgName"}, {"Folder Path - Copy.10", "Folder5"}, {"Folder Path - Copy.9", "Folder4"}, {"Folder Path - Copy.8", "Folder3"}, {"Folder Path - Copy.7", "Folder2"}, {"Folder Path - Copy.6", "Folder1"}}),
+    #"Duplicated Column2" = Table.DuplicateColumn(#"Renamed Columns", "Folder Path", "Folder Path - Copy"),
+    #"Split Column by Delimiter2" = Table.SplitColumn(#"Duplicated Column2", "Folder Path - Copy", Splitter.SplitTextByDelimiter("\Items", QuoteStyle.Csv), {"Folder Path - Copy.1", "Folder Path - Copy.2"}),
+    #"Removed Columns2" = Table.RemoveColumns(#"Split Column by Delimiter2",{"Folder Path - Copy.1"}),
+    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns2","\","/",Replacer.ReplaceText,{"Folder Path - Copy.2"}),
+    #"Duplicated Column3" = Table.DuplicateColumn(#"Replaced Value", "ImgName", "ImgName - Copy"),
+    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column3",{"Folder Path - Copy.2", "ImgName - Copy"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"CODItemName")
+in
+    #"Merged Columns"

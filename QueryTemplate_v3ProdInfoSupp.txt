@@ -1,0 +1,5 @@
+let
+    Source = Excel.Workbook(File.Contents("C:\Users\{YourUsernameHere}\Downloads\CCS317252_AddlClassMaterials\V3ProdInfo.xlsx"), null, true),
+    v3ProdInfoSupp_Table = Source{[Item="v3ProdInfoSupp",Kind="Table"]}[Data]
+in
+    v3ProdInfoSupp_Table
