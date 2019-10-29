@@ -20,16 +20,16 @@ This is a deployable folder to use on your local Autodesk Imperial Fabrication D
 
   - From:
 
-    ```v
+    ```sql
     let
     Source = Excel.Workbook(File.Contents("C:\Users\{YourUsernameHere}\Downloads\CCS317252_AddlClassMaterials\ASTI_HarrisonImport.xlsx"), null, true),
     ```
 
   - To:
 
-    ```v
+    ```sql
     let
-    Source = Excel.Workbook(File.Contents("C:\Users\tphillips\Destop\CCS317252_AddlClassMaterials\ASTI_HarrisonImport.xlsx"), null, true),
+    Source = Excel.Workbook(File.Contents("C:\Users\tphillips\Desktop\CCS317252_AddlClassMaterials\ASTI_HarrisonImport.xlsx"), null, true),
     ```
 
 4. Paste modified scripts in the advanced editor window of each query
