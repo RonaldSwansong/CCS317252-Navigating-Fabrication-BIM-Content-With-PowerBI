@@ -12,7 +12,7 @@ This is a deployable folder to use on your local Autodesk Imperial Fabrication D
 
 ## Setup
 
-1. Download and unpack this folder to your "C:\Users\ {YourUsernameHere} \Downloads\" directory.
+1. [Download and unpack the class materials](https://autodeskuniversity.smarteventscloud.com/connect/sessionDetail.ww?SESSION_ID=317252) to your "C:\Users\ {YourUsernameHere} \Downloads\" directory.
 2. Open the _v3UpdatedWHarrison.pbix_ file and click "Edit Queries" in the ribbon to open the Power Query Editor.
 3. Open and Edit the Query Template files with your user account info and unpack location in the "Source=" line
 
